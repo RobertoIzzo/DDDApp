@@ -1,0 +1,44 @@
+***vs
+ctrl m p - expand region
+ctrl m o - collapse
+ctrl r m - refactor
+ctrl tab - move to file
+ctrl k i - show type
+ctrl f4  - chiudi file
+ctrl f2  - metodi di una  classe
+ctrl rr  - rinomina
+ctrl s
+ctrl shift s -salvo tutto
+
+alt 2 -method reference
+
+
+shift f12 -find usages
+
+F5 DEBUG
+SHIFT F5 STOP DEBUG
+
+***windows
+windos  s      -apro search
+ctrl windows d -creo virtual desktop
+ctrl windows   -elimino  vd
+ctrl windows   -passo a vd
+
+
+***chrome
+ctrl f4  -chiudo
+ctrl n   -nuova pagina
+ctrk t   -nuova tab
+ctrl tab - move to file
+
+
+***sql
+ctrl n   -nuova pagina
+ctrl tab - move to file
+
+
+***sublime
+ctrl n   -nuova pagina
+ctrl tab - move to file
+ctrl s
+ctrl shift s salvo tutto
