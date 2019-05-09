@@ -1,0 +1,57 @@
+If a method (instance or static) only references variables scoped within that method then it is thread safe because each thread has its own stack:
+
+In this instance, multiple threads could call ThreadSafeMethod concurrently without issue.
+
+public class Thing
+{
+    public int ThreadSafeMethod(string parameter1)
+    {
+        int number; // each thread will have its own variable for number.
+        number = parameter1.Length;
+        return number;
+    }
+}
+This is also true if the method calls other class method which only reference locally scoped variables:
+
+public class Thing
+{
+    public int ThreadSafeMethod(string parameter1)
+    {
+        int number;
+        number = this.GetLength(parameter1);
+        return number;
+    }
+
+    private int GetLength(string value)
+    {
+        int length = value.Length;
+        return length;
+    }
+}
+If a method accesses any (object state) properties or fields (instance or static) then you need to use locks to ensure that the values are not modified by a different thread.
+
+public class Thing
+{
+    private string someValue; // all threads will read and write to this same field value
+
+    public int NonThreadSafeMethod(string parameter1)
+    {
+        this.someValue = parameter1;
+
+        int number;
+
+        // Since access to someValue is not synchronised by the class, a separate thread
+        // could have changed its value between this thread setting its value at the start 
+        // of the method and this line reading its value.
+        number = this.someValue.Length;
+        return number;
+    }
+}
+You should be aware that any parameters passed in to the method which are not either a struct or immutable could be mutated by another thread outside the scope of the method.
+
+To ensure proper concurrency you need to use locking.
+
+for further information see lock statement C# reference and ReadWriterLockSlim.
+
+lock is mostly useful for providing one at a time functionality, 
+ReadWriterLockSlim is useful if you need multiple readers and single writers.

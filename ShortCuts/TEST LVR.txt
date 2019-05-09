@@ -1,0 +1,6 @@
+viene usato app.integration per fare sia test integrazione e sia nevercommit
+
+
+come db posso mettere as400if t1 t2 è indifferente
+
+normalmente fino a quando si fa deploy in test per testare si puo fare deploy del branch su test, poi alla fine si fa trunk e deploy del trunk

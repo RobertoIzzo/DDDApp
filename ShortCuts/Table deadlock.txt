@@ -1,0 +1,36 @@
+se faccio tante insert in transazione e sempre con nuova connessione (operationmanager) nella stessa tabella in parallelo la tabella ha un lock mentre fa insert e gli altri thread 
+aspettano che viene tolto il lock e così via.
+Se si vogliono fare tante insert in maniera no transazionale si può usare la bulk insert ma li non si ha transazione per ogni singola insert.
+
+
+In summary, the sequence leading to this deadlock was:
+
+1) connection 1 updated a PurchaseOrderHeader but did not commit
+
+2) connection 2 updated the PurchaseDetail table and the fired trigger was blocked when trying to update PurchaseOrderHeader
+
+3) connection 1 tried to update PurchaseDetail but was blocked by connection
+
+4) SQL Server chose connection 1 as the deadlock victim, allowing connection 2 to autocommit
+
+
+un altro esempio....
+
+
+Process 1 locks row 1 in Table A.
+
+Process 2 locks row 2 in Table B.
+
+Being Transactional, neither will give up their control of these locks until commit [or rollback] is issued.
+
+Each now wants to lock the row that the other already has locked - 
+Process 1 wants to lock row 2 in Table B 
+Process 2 wants to lock row 1 in Table A. 
+If the locks were on different rows, the deadlock would not happen.
+
+The two processes enter a "deadly embrace" from which neither can ever escape; 
+each will wait forever for the other to release its lock, which will never happen. The DBMS detects this situation and kills one of the processes, usually at random, allowing the other to complete.
+
+There does not need to be any logical relationship between the two tables involved, only that they exist and that rows within them are locked "out of sequence" by the two processes.
+
+This is why careful Application design is essential, making sure that updates are [generally] applied in "the same order", to avoid exactly this situation. If both Processes updated Table A and Table B in the same order, then the deadlock could be completely avoided.

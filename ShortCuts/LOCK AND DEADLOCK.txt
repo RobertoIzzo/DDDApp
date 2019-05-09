@@ -1,0 +1,27 @@
+A lock occurs when multiple processes try to access the same resource at the same time.
+
+One process loses out and must wait for the other to finish.
+
+A deadlock occurs when the waiting process is still holding on to another resource that the first needs before it can finish.
+
+So, an example:
+
+Resource A and resource B are used by process X and process Y
+
+X starts to use A.
+X and Y try to start using B
+Y 'wins' and gets B first
+now Y needs to use A
+A is locked by X, which is waiting for Y
+The best way to avoid deadlocks is to avoid having processes cross over in this way. Reduce the need to lock anything as much as you can.
+
+In databases avoid making lots of changes to different tables in a single transaction, avoid triggers and switch to optimistic/dirty/nolock reads as much as possible.
+process  could be threads, but could also be completely different applications, or database connections
+
+resource :memory,printer,cpu,files,cdrom
+
+
+***QUESTIONS***
+Thread A locks resource A and having a long process. Thread B waiting to lock resource A. CPU time usage : 20%, can you consider that a deadlock situation? 
+No, that's just a regular lock wait, though the difference is a little academic. B waiting on slow A is a lock, B waiting for A waiting for B is a deadlock
+it's a lock that won't become free, no matter how long you wait, because of the circular queue.

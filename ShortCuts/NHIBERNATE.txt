@@ -1,0 +1,22 @@
+create sql query insert non ha isogno di mapping
+
+
+  private OrderRefundOnDb GetOrderRefund(int refundId)
+        {
+            using (var om = new OperationManager())
+            {
+                var session = om.BeginOperation();
+                var res = session.CreateSQLQuery("SELECT * from order_refund WHERE Id = :Id")
+                    .SetParameter("Id", refundId)
+                    .SetResultTransformer(Transformers.AliasToBean(typeof(OrderRefundOnDb)))
+                    .UniqueResult<OrderRefundOnDb>();
+
+                om.CommitOperation();
+                
+                return res;
+            }
+        }
+
+
+
+session.CreateSQLQuery senza mapping na con OrderRefundOnDb 

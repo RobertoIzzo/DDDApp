@@ -1,0 +1,34 @@
+unmanaged resources (at least for standard .NET BCL classes such as streams, readers/writers, ...). 
+The term "unmanaged resource" is usually used to describe something not directly under the control of the garbage collector. 
+For example, if you open a connection to a database server this will use resources on the server (for maintaining the connection) 
+and possibly other non-.net resources on the client machine, if the provider isn't written entirely in managed code.
+
+This is why, for something like a database connection, it's recommended you write your code thusly:
+
+using (var connection = new SqlConnection("connection_string_here"))
+{
+    // Code to use connection here
+}
+As this ensures that .Dispose() is called on the connection object, ensuring that any unmanaged resources are cleaned up.
+
+I think of the terms "managed" and "unmanaged" this way:
+
+"Managed" refers to anything within the .NET sandbox. This includes all .NET Framework classes.
+
+"Unmanaged" refers to the wilderness outside the .NET sandbox. 
+This includes anything that is returned to you through calls to Win32 API functions.
+
+If you never call a Win32 API function and never get back any Win32 "handle" objects, 
+then you are not holding any unmanaged resources. 
+Files and streams that you open via .NET Framework class methods are all managed wrappers.
+
+NOOOOO!!!!!!!!
+
+Comment: You may not be holding an unmanaged resource directly.
+ However, you may be holding an unmanaged resource indirectly via a managed "wrapper class" such as System.IO.FileStream.
+ Such a wrapper class commonly implements IDisposable (either directly or via inheritance).
+
+ Il tipo più comune di risorsa non gestita è rappresentato dagli oggetti che eseguono il wrapping di risorse del sistema operativo, quali file, finestre, connessioni di rete
+ o connessioni di database. 
+Benché il Garbage Collector sia in grado di tenere traccia della durata di un oggetto in cui è incapsulata una risorsa non gestita, 
+non dispone di dati sufficienti per effettuare il rilascio e la pulizia della risorsa non gestita.
