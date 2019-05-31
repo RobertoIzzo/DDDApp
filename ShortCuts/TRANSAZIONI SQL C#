@@ -1,0 +1,53 @@
+//posso usare nest transaction
+using (TransactionScope scope = new TransactionScope())
+            {
+                SqlConnection connection = new SqlConnection(connectString1);
+                try
+                {
+                    connection.Open();
+                    // Create the SqlCommand object and execute the first command.
+                    SqlCommand command1 = new SqlCommand(commandText1, connection);
+                    returnValue = command1.ExecuteNonQuery();
+                    //scope.Complete(); fa commit
+                }
+                catch (Exception ex)
+                {
+                   Log.error(ex)
+                }
+ }
+
+ -------------------------------------
+
+  using (SqlConnection connection = new SqlConnection(connectionString))
+    {
+        connection.Open();
+
+        SqlCommand command = connection.CreateCommand();
+        SqlTransaction transaction;
+
+        // Start a local transaction.
+        transaction = connection.BeginTransaction("SampleTransaction");
+
+        // Must assign both transaction object and connection
+        // to Command object for a pending local transaction
+        command.Connection = connection;
+        command.Transaction = transaction;
+
+        try
+        {
+            command.CommandText =
+                "Insert into Region (RegionID, RegionDescription) VALUES (100, 'Description')";
+            command.ExecuteNonQuery();
+            command.CommandText =
+                "Insert into Region (RegionID, RegionDescription) VALUES (101, 'Description')";
+            command.ExecuteNonQuery();
+
+            // Attempt to commit the transaction.
+            //transaction.Commit();
+            Console.WriteLine("Both records are written to database.");
+        }
+        finally
+        {
+           transaction.Rollback();
+        }
+    }

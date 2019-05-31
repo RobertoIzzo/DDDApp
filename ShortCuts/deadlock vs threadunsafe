@@ -1,0 +1,90 @@
+
+threasd unsafe  2 trhead condividono variabile in maniera non consistente
+
+metodo di una classe che modifica una variabile di istanza o statica senza lock 
+
+perchè puo essere cambiata da 2 thread in maniera non safe
+
+ad esempio 
+
+public class Counter {
+
+   private int count;
+
+  //This method is not thread-safe because ++ is not an atomic operation
+
+   public int getCount(){
+
+     return count++;
+
+     }
+}
+
+count ++ => sono 2 operazioni
+1. leggo count
+2. aggiungo 1
+
+t1 sta incrementando count 0+1
+t2 lo legge ancora al valore 0
+t2 lo incrementa al valore 1 e ritorna 1 mentre invece dovrebbe essere 2 perchè getcount è stato chiamato 2 volte
+
+altro esempio :  List<T> class is not thread safe
+
+private void stackOverFlowExample()
+{
+    List<string> testCompany = new List<string>();
+    List<People> testList = new List<People>();
+
+    testCompany.Add("Stack Over Flow 1");
+    testCompany.Add("Stack Over Flow 2");
+    testCompany.Add("Stack Over Flow 3");
+    ...(1000 Times)...
+
+    Parallel.ForEach(testCompany, company => 
+    {
+        testList.Add(new People()
+        {
+            Name = value1, // Some values
+            Address = value2,
+            Phone = value3,
+            Company = company
+        });
+    });
+}
+
+
+
+per risolvere devo mettere lock
+
+private void stackOverFlowExample()
+{
+    List<string> testCompany = new List<string>();
+    List<People> testList = new List<People>();
+    object sync = new Object();
+
+    testCompany.Add("Stack Over Flow 1");
+    testCompany.Add("Stack Over Flow 2");
+    testCompany.Add("Stack Over Flow 3");
+    ...(1000 Times)...
+
+    Parallel.ForEach(testCompany, company => 
+    {
+        People p = new People()
+        {
+            Name = value1, // Some values
+            Address = value2,
+            Phone = value3,
+            Company = company
+        };
+        lock (sync) {
+          testList.Add(p);
+        }
+    });
+}
+
+
+-----------------
+deadlock due trhead 
+
+t1 blocca source A e aspetta che t2 sblocchi B 
+t2 blocca source B e aspetta che t1 sblocchi A

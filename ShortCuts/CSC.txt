@@ -1,0 +1,42 @@
+CSC.exe is the CSharp compiler included in the .NET Framework and can be used to compile from the command prompt. 
+The output can be an executable (.exe) if you use /target:exe, or a DLL if you use /target:library. 
+CSC.exe is found in the .NET Framework directory, e.g. for .NET 3.5, c:\windows\Microsoft.NET\Framework\v3.5\.
+
+To run it, first open a command prompt (click Start... then type cmd.exe). You may then have to cd into the directory that holds your source files.
+
+Run the C# compiler like this:
+
+  c:\windows\Microsoft.NET\Framework\v3.5\bin\csc.exe 
+            /t:exe /out:MyApplication.exe MyApplication.cs  ...
+(all on one line)
+
+If you have more than one source module to be compiled, you can put it on that same command line.
+ If you have other assemblies to reference, use /r:AssemblyName.dll .
+
+Ensure you have a static Main() method defined in one of your classes to act as the "entry point".
+
+To run the resulting EXE, just type MyApplication followed by <ENTER> at the command prompt.
+
+This article on MSDN goes into more detail on the options for the command-line compiler. 
+You can embed resources, set icons, sign assemblies - everything you could do within Visual Studio.
+
+If you have Visual Studio installed, in the Start menu (under Visual Studio Tools) 
+you can open a "Visual Studio Command Prompt" that will set up all 
+required environment and path variables for command line compilation.
+
+While it's very handy to know of this, you should combine it with knowledge
+ of some sort of build tool such as NAnt, MSBuild, FinalBuilder etc.
+  These tools provide a complete build environment, not just the basic compiler.
+
+Csc and MSBuild are completely different applications.
+
+MSBuild uses a solution and project files to build the files in your project.
+ MSBuild uses csc.exe as its actual compiler but knows where to find assemblies, 
+ references etc based on your solution and project files (these files are actually xml files).
+
+When using csc.exe you must manually provide paths to your files, 
+references and so on, thus making your compilation much more difficult.
+
+MSDN MSBuild: http://msdn.microsoft.com/en-us/library/dd393574.aspx
+
+MSDN CSC : http://msdn.microsoft.com/en-us/library/78f4aasd.aspx
