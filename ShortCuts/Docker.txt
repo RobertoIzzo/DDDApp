@@ -1,0 +1,3 @@
+https://lvrteam.atlassian.net/wiki/spaces/SYS/pages/1209139231/Federated+RabbitMq+dockerizzato+per+developer
+https://lvrteam.atlassian.net/wiki/spaces/SYS/pages/1215266817/Elasticsearch+Kibana+dockerizzato 
+https://lvrteam.atlassian.net/wiki/spaces/SYS/pages/1215430664/Redis+dockerizzato

@@ -1,0 +1,7 @@
+alta coesione è conseguenza di basso accoppiamento
+
+più un modulo racchiude funzionalità coese (strettamente correlate)  più sara manutenibile.Quindi DIFFERENTI FUNZIONALITA non devono essere accoppiate
+Questo rende  un software : robusto , manutenibile, testabile, estendibile.
+
+ una classe che  legge dati, invia email,scrive su fylesystem se devo modificare una funzionalità ad esempio inviare email  dovro mettere mano alla classe rischiando di rompere altre funzionalità e ritestando tutto
+mentre se devo mettere amno alla classe che invia solo email dovrò estendere solo una sua interfaccia per inviare email senza toccare le altre che saranno in altri classe (moduli)

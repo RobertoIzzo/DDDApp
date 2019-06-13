@@ -1,0 +1,97 @@
+https://www.html.it/pag/70693/funzioni-pure-e-non-pure/
+
+f pure :dato lo stesso input ricevo sempre lo stesso output NON DEVONO AVERE EFFETTI COLLATERALI
+
+int function add(n1,n2) {
+    return n1+n2;
+}
+
+
+f NON pure : dato lo stesso input NON ricevo sempre lo stesso output
+
+//il metodo add ha un SIDE EFFECT sull'AMBIENTE value,
+// L’insieme dei dati modificabili condiviso tra più funzioni o tra più oggetti è 
+// comunemente chiamato stato
+var value = 0;//ambiente
+function add(n) {
+    value = value + n;
+    return value;
+}
+
+add(1); //result: 1
+add(1); //result: 2
+
+Questa variabile rappresenta l’ambiente in cui la funzione viene eseguita, e tale ambiente viene modificato 
+dalla funzione stessa. In pratica, il risultato dell’applicazione della funzione sul valore in input 
+non è soltanto il valore numerico esplicitamente restituito, 
+ma anche l’effetto che tale applicazione ha sulla variabile value, 
+cioè su un ambiente non esplicito che però determina il risultato fornito come output.
+La modifica di questo ambiente viene generalmente 
+indicata come un effetto collaterale (side effect), 
+cioè un effetto non esplicito che potrebbe influire non soltanto sulla funzione corrente, 
+ma anche su altre funzioni che condividono lo stesso ambiente.
+ L’insieme dei dati modificabili condiviso tra più funzioni o tra più oggetti è 
+ comunemente chiamato stato ed è il principale responsabile della difficoltà nel 
+ gestire la complessità delle applicazioni software. La gestione di dati condivisi rende complessa
+  un’applicazione non tanto per la condivisione in sè,
+  ma per il fatto che questi dati possono variare in seguito all’interazione di diversi 
+  oggetti e/o funzioni e rende impredicibile il risultato atteso. 
+  Ad esempio, è difficile poter definire dei test automatici che ci garantiscano la correttezza di una funzione 
+  che ha degli effetti collaterali.
+   La presenza di effetti collaterali rende tra l’altro complessa l’attività di refactoring, 
+   dal momento che non possiamo concentrarci soltanto sulle finalità della funzione,
+    ma dobbiamo tener conto anche degli effetti sull’ambiente esterno.
+
+    "Una funzione senza parametri non è pura o non ha senso"
+    "Una funzione senza un output non è pura"
+
+   *** trasparenza refernziale 
+    var s = add(1,2) * 8 posso scrivere tranquillamente 
+    var s = 3 * 8
+
+***memoization : mettere in cache i risultati di una funzione pura 
+che hanno un certo costo computazionale (tanto il risultato sarà sempre lo stesso con gli stessi dati in input)
+
+Eliminare effetti collaterali (fare caso che sono cose che sono un problema anche nei TEST) :
+ -le chiamate AJAX;
+ -le interazioni con i dispositivi, come ad esempio tastiere, mouse, console, ecc.;
+ -l’accesso a dati esterni, come ad esempio cookie, DOM, localStorage, ecc.;
+ -l’interazione con il sistema, ad esempio la richiesta della data e ora corrente o la generazione di un 
+ numero casuale tramite Math.random().
+ -le chiamate a funzioni non pure
+ -la modifica all'interno della funzione dei paramtri passati per riferimento
+
+
+***codice non puro dentro funzioni pure***
+
+function sum(listOfIntegers) {
+   let result = 0;
+   for (let i of listOfIntegers) {
+      result = result + i;
+   }
+   return result;
+}
+
+Essa restituisce la somma degli interi contenuti in un array. Il calcolo si basa su un ciclo ed una variabile 
+che fa da accumulatore delle somme parziali. Ad ogni iterazione del ciclo viene modificata la variabile locale 
+result, ed in effetti questo è un effetto collaterale delle istruzioni del ciclo. In altre parole, 
+se considerassimo il ciclo for come una funzione, essa non sarebbe pura. Tuttavia, l’effetto esterno della 
+funzione sum() è quello di una funzione pura: a parità di input otterremo sempre lo stesso output. L’effetto 
+collaterale locale non influenza l’ambiente esterno, per cui possiamo accettare situazioni di questo tipo, 
+in quanto viene mantenuta la trasparenza referenziale.
+
+***La necessità di funzioni non-pure***
+Parlando della distinzione tra funzioni pure e non pure, 
+abbiamo messo in risalto il fatto che le funzioni pure presentano una serie di vantaggi, come la testabilità, 
+la semplicità di refactoring o l’applicazione di tecniche di ottimizzazione come la memoization. 
+Abbiamo anche visto come in alcuni casi è possibile trasformare una funzione non pura in una funzione pura. 
+Questi concetti sembrerebbero trasmettere l’idea che la modifica di un ambiente esterno tramite funzioni 
+non pure sia sempre da evitare. Naturalmente questa idea è estrema. Nella pratica non avremo 
+mai applicazioni che non necessitano di fare riferimento ad un ambiente esterno: 
+basti pensare alla semplice gestione dell’input e dell’output.
+L’idea della programmazione funzionale non è quella di eliminare l’esistenza delle funzioni non pure. 
+L’idea è invece di scrivere quanto più possibile funzioni pure e deterministiche e 
+ricorrere al minimo indispensabile, ma necessario, per generare effetti collaterali ed interagire con 
+il mondo esterno.
+
+

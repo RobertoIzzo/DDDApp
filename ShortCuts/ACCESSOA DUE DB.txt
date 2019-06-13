@@ -1,0 +1,16 @@
+1se non sono in nservicebus posso fare uno nhibernate e 1 qury a dritto
+2se sono in nservicebus posso fare tutto n hibernate e 1  fluent e la tlreo ceratesql con nome db diversoe  lui sovrascrive (non posso fare nhibernate +query dritto *1)
+
+
+NOTA1*
+https://www.codeproject.com/Tips/1233146/Working-with-MSDTC
+https://docs.particular.net/nservicebus/operations/transactions-message-processing
+https://nhibernate.info/doc/nhibernate-reference/transactions.html#transactions-scopes
+
+Network access for Distributed Transaction Manager (MSDTC) has been disabled. 
+Please enable DTC for network access in the security configuration for MSDTC using the 
+Component Services Administrative tool.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Inner Exception:
+The transaction manager has disabled its support for remote/network transactions. 
+(Exception from HRESULT: 0x8004D024)
