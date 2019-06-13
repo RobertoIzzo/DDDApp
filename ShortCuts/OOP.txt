@@ -1,0 +1,32 @@
+
+Relazioni tra classi
+Una classe che non si interfacci con altre classi è sicuramente poco significativa nella programmazione a oggetti. Abbiamo visto che gli oggetti, in un programma OOP, interagiscono tra loro utilizzando lo scambio di messaggi per richiedere l’esecuzione di un particolare metodo.
+Tale comunicazione consente di identificare all’interno del programma una serie di relazioni tra le classi in gioco la cui documentazione risulta essere assai utile in fase di disegno e di analisi.
+Ad esempio, se ci si accorge dell’esistenza di due o più classi che abbiano un comportamento comune, sarà il caso di inglobare tale comportamento in una classe di livello superiore in modo da risparmiarsi un po’ di fatica (riprenderemo tale concetto quando si parlerà di ereditarietà) a tutto vantaggio dello sviluppo.
+Viceversa, se alcune classi risultano essere totalmente slegate tra loro sarà possibile, in fase di implementazione del codice, procedere in modo parallelo in modo che non sia necessario che uno dei programmatori debba attendere che un altro finisca per procedere nella stesura del codice assegnatogli.
+
+
+e più comuni relazioni tra classi, in un programma ad Oggetti sono identificabili in tre tipologie:
+
+Associazioni (Use Relationship)
+Aggregazioni (Containment Relationship)
+Specializzazioni (Inheritance Relationship)
+ 
+
+Associazione
+L’Associazione è il tipo di Relazione più intuitiva ed anche più diffuso. In generale, diciamo che una classe A utilizza una classe B se un oggetto della classe A è in grado di inviare dei messaggi ad un oggetto di classe B oppure se un oggetto di classe A può creare, ricevere o restituire oggetti di classe B.
+Più in dettaglio, potremmo dire che una classe è associata ad un’altra se è possibile “navigare” da oggetti della prima classe ad oggetti della seconda classe seguendo semplicemente un riferimento ad un oggetto.
+Ad esempio, dato un oggetto di tipo Persona, è possibile giungere ad oggetti di tipo Azienda accedendo semplicemente alla variabile istanza azienda definita all’interno della classe Persona.. Nella figura seguente viene rappresentata graficamente la relazione di tipo Associazione tra queste due classi:
+Si può notare, osservando la figura, come sia anche possibile assegnare un nome alla associazione tra le due classi (Il nome in questione è: “Lavora per”) e dare una direzione all’associazione stessa, intendendo con ciò il verso in cui avviene la navigazione tra le classi.
+Se la navigazione è, invece, possibile in entrambe le direzioni si parlerà di associazione bidirezionale e non si inserirà alcuna freccia..
+
+Aggregazione
+La relazione di tipo Aggregazione si basa, invece, sul seguente concetto: Un oggetto di classe A contiene un oggetto di classe B se B è una proprietà (attributo) di A.
+In sostanza, l’aggregazione è una forma di associazione più forte: una classe ne aggrega un’altra se esiste tra le due classi una relazione di tipo “intero-parte”.
+Ad esempio la classe Azienda aggrega la classe Persona perché una ditta (che costituisce l'”intero”) è composta da persone (che costituiscono la “parte”).
+Una classe ContoBancario, invece, non è legata da una relazione di tipo aggregazione con la classe Persona anche se può essere plausibile che sia possibile navigare da un oggetto che rappresenta un conto bancario fino ad un oggetto che rappresenta una persona, il proprietario del conto. Dal punto di vista concettuale, però, una persona non si può far appartenere ad un conto bancario.
+
+Composizione
+La Composizione è una forma di aggregazione ancora più forte che indica che una “parte” può appartenere ad un solo “intero” in un certo istante di tempo.
+Ad esempio, uno pneumatico può far parte di una sola automobile in un certo istante, mentre, al contrario, una persona potrebbe lavorare contemporaneamente per due ditte.
+Ad essere sinceri, le differenze tra associazione, aggregazione e composizione possono trarre in confusione anche gli analisti più esperti. Per tale motivo si raccomanda di utilizzare tali tipi di relazioni soltanto se il loro utilizzo può essere di reale giovamento.
