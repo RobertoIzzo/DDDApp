@@ -26,8 +26,12 @@ namespace @delegate
 
             // Lambda Expression
             Func<int, int, int> func2 = (a, b) => a + b;
+            var result2 = func2(2, 4);
+            
+            // func 
+            Func<int, int, int> func0 = (a, b) => func(a,b);
+            var resultx = func0(2, 4);
 
-            var result2 = func(2, 4);
 
             var res = Operation(Sum, 1, 2);
 
@@ -42,9 +46,11 @@ namespace @delegate
 
             Func<int, int, int, string> functionDelegate = SampleFunction;
             Func<int, int, string> partial1Delegate = ApplyPartial(functionDelegate, 1);
+            string partial1DelegateRes = partial1Delegate(1,2);
             Func<int, string> partial2Delegate = ApplyPartial(partial1Delegate, 2);
+            string partial2DelegateRes = partial2Delegate(3);
             Func<string> partial3Delegate = ApplyPartial(partial2Delegate, 3);
-            string res5 = partial3Delegate();
+            string partial3DelegateRes = partial3Delegate();
         }
 
         static string SampleFunction(int a, int b, int c)
@@ -93,14 +99,14 @@ namespace @delegate
             return (b, c) => function(arg1, b, c);
         }
 
-        static Func<T2, TResult> ApplyPartial<T1, T2, TResult>
-            (Func<T1, T2, TResult> function, T1 arg1)
+        static Func<T3, TResult> ApplyPartial<T2, T3, TResult>
+            (Func<T2, T3, TResult> function, T2 arg1)
         {
-            return (b) => function(arg1,b);
+            return a => function(arg1,a);
         }
 
-        static Func<TResult> ApplyPartial<T1, TResult>
-            (Func<T1, TResult> function, T1 arg1)
+        static Func<TResult> ApplyPartial<T3, TResult>
+            (Func<T3, TResult> function, T3 arg1)
         {
             return () => function(arg1);
         }
