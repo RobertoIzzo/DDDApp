@@ -40,11 +40,11 @@ namespace @delegate
             var curry = Apply((x, y) => x + y, "a", "b");
             var res4 = curry();
 
-            Func<int, int, int, string> function = SampleFunction;
-            Func<int, int, string> partial1 = ApplyPartial(function, 1);
-            Func<int, string> partial2 = ApplyPartial(partial1, 2);
-            Func<string> partial3 = ApplyPartial(partial2, 3);
-            string res5 = partial3();
+            Func<int, int, int, string> functionDelegate = SampleFunction;
+            Func<int, int, string> partial1Delegate = ApplyPartial(functionDelegate, 1);
+            Func<int, string> partial2Delegate = ApplyPartial(partial1Delegate, 2);
+            Func<string> partial3Delegate = ApplyPartial(partial2Delegate, 3);
+            string res5 = partial3Delegate();
         }
 
         static string SampleFunction(int a, int b, int c)
