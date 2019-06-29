@@ -44,13 +44,16 @@ namespace @delegate
             var curry = Apply((x, y) => x + y, "a", "b");
             var res4 = curry();
 
-            Func<int, int, int, string> functionDelegate = SampleFunction;
-            Func<int, int, string> partial1Delegate = ApplyPartial(functionDelegate, 1);
-            string partial1DelegateRes = partial1Delegate(1,2);
-            Func<int, string> partial2Delegate = ApplyPartial(partial1Delegate, 2);
-            string partial2DelegateRes = partial2Delegate(3);
-            Func<string> partial3Delegate = ApplyPartial(partial2Delegate, 3);
-            string partial3DelegateRes = partial3Delegate();
+            Func<int, int, int, string> functionsenzaparametri = SampleFunction;
+
+            Func<int, int, string> partialconparametro1 = ApplyPartial(functionsenzaparametri, 1);
+            string resx = partialconparametro1(2,3);//
+
+            Func<int, string> partialconparametro1e2 = ApplyPartial(partialconparametro1, 2);
+            string resy = partialconparametro1e2(3);//
+
+            Func<string> partialconparametro123 = ApplyPartial(partialconparametro1e2, 3);
+            string resz = partialconparametro123();//
         }
 
         static string SampleFunction(int a, int b, int c)
@@ -100,15 +103,15 @@ namespace @delegate
         }
 
         static Func<T3, TResult> ApplyPartial<T2, T3, TResult>
-            (Func<T2, T3, TResult> function, T2 arg1)
+            (Func<T2, T3, TResult> function, T2 arg2)
         {
-            return a => function(arg1,a);
+            return c => function(arg2,c);
         }
 
         static Func<TResult> ApplyPartial<T3, TResult>
-            (Func<T3, TResult> function, T3 arg1)
+            (Func<T3, TResult> function, T3 arg3)
         {
-            return () => function(arg1);
+            return () => function(arg3);
         }
     }
 }
