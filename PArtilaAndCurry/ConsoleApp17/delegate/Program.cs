@@ -54,6 +54,19 @@ namespace @delegate
 
             Func<string> partialconparametro123 = ApplyPartial(partialconparametro1e2, 3);
             string resz = partialconparametro123();//
+
+            // Normal call 
+            string resulta = SampleFunction(1, 2, 3);
+            
+            // Call via currying 
+            Func<int, Func<int, Func<int, string>>> f1 = Curry<int,int,int,string>(SampleFunction);
+            Func<int, Func<int, string>> f2 = f1(1);
+            Func<int, string> f3 = f2(2);
+            string resultb = f3(3);
+
+            //Or to do make all the calls together… 
+            var curried = Curry<int, int, int, string>(SampleFunction);
+            string result3 = curried(1)(2)(3);
         }
 
         static string SampleFunction(int a, int b, int c)
@@ -96,6 +109,8 @@ namespace @delegate
         }
 
         //partial function
+        //converts a function with N parameters into a function 
+        //with N-1 parameters by applying one argument, 
         static Func<T2, T3, TResult> ApplyPartial<T1, T2, T3, TResult>
             (Func<T1, T2, T3, TResult> function, T1 arg1)
         {
@@ -112,6 +127,52 @@ namespace @delegate
             (Func<T3, TResult> function, T3 arg3)
         {
             return () => function(arg3);
+        }
+
+        //Currying
+        //Whereas partial function application 
+        //converts a function with N parameters into a function 
+        //with N-1 parameters by applying one argument, 
+        //currying effectively decomposes the function into functions taking 
+        //a single parameter.We don’t pass any arguments into the Curry method itself:
+        //Curry(f) returns a function f1 such that…
+        //f1(a) returns a function f2 such that…
+        //f2(b) returns a function f3 such that…
+        //f3(c) invokes f(a, b, c)
+        static Func<T1, Func<T2, Func<T3, TResult>>> Curry<T1, T2, T3, TResult>
+            (Func<T1, T2, T3, TResult> function)
+        {
+            return a => b => c => function(a, b, c);
+        }
+
+        static Func<T1, Func<T2, Func<T3, TResult>>> Curry1<T1, T2, T3, TResult>
+            (Func<T1, T2, T3, TResult> function)
+        {
+            return delegate(T1 a)
+            {
+                return delegate(T2 b)
+                {
+                    return delegate(T3 c)
+                    {
+                        return function(a, b, c);
+                    };
+                };
+            };
+        }
+
+        static Func<T1, Func<T2, Func<T3, TResult>>> Curry2<T1, T2, T3, TResult>
+            (Func<T1, T2, T3, TResult> function)
+        {
+            Func<T2, Func<T3, TResult>> Func(T1 a)
+            {
+                Func<T3, TResult> Func1(T2 b)
+                {
+                    TResult Func2(T3 c) => function(a, b, c);
+                    return Func2;
+                }
+                return Func1;
+            }
+            return Func;
         }
     }
 }
